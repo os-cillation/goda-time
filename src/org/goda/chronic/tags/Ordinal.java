@@ -4,8 +4,6 @@ import org.goda.chronic.Options;
 import org.goda.chronic.utils.Token;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 public class Ordinal extends Tag<Integer> {
