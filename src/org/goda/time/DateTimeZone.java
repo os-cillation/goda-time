@@ -15,6 +15,7 @@
  */
 package org.goda.time;
 
+import com.google.gwt.core.client.GWT;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
@@ -115,10 +116,14 @@ public abstract class DateTimeZone implements Serializable {
 //            }
             if (cDefault == null) {
                 ///
+                if(GWT.isClient()){
                 cDefault = forTimeZone(
                         com.google.gwt.i18n.client.DateTimeFormat
                         .getFormat( "zzz" )
                         .format(new Date()));
+                } else {
+                    cDefault = forTimeZone("EDT") ;//TODO change this
+                }
             }
         } catch (IllegalArgumentException ex) {
             // ignored

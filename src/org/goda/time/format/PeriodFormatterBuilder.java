@@ -23,6 +23,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.goda.util.CollectionUtils;
 import org.goda.time.DateTimeConstants;
 import org.goda.time.DurationFieldType;
 import org.goda.time.PeriodType;
@@ -753,7 +754,7 @@ public class PeriodFormatterBuilder {
         for (i=pairs.size(); --i>=0; ) {
             if (pairs.get(i) instanceof Separator) {
                 lastSeparator = (Separator) pairs.get(i);
-                pairs = pairs.subList(i + 1, pairs.size());
+                pairs = CollectionUtils.subList(pairs,i + 1, pairs.size());
                 break;
             }
             i--;  // element pairs
@@ -800,7 +801,7 @@ public class PeriodFormatterBuilder {
         int size = elementPairs.size();
         if (size >= 2 && elementPairs.get(0) instanceof Separator) {
             Separator sep = (Separator) elementPairs.get(0);
-            PeriodFormatter f = toFormatter(elementPairs.subList(2, size), notPrinter, notParser);
+            PeriodFormatter f = toFormatter(CollectionUtils.subList(elementPairs,2, size), notPrinter, notParser);
             sep = sep.finish(f.getPrinter(), f.getParser());
             return new PeriodFormatter(sep, sep);
         }
