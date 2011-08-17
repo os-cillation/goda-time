@@ -18,7 +18,7 @@ public class RepeaterSeason extends RepeaterUnit {
   }
 
   @Override
-  public MutableInterval getOffset(MutableInterval span, int amount, PointerType pointer) {
+  public MutableInterval getOffset(MutableInterval span, double amount, PointerType pointer) {
     throw new IllegalStateException("Not implemented.");
   }
 

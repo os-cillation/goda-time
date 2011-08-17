@@ -13,7 +13,7 @@ import org.goda.time.MutableInterval;
 public class SRPHandler implements IHandler {
 
   public MutableInterval handle(List<Token> tokens, MutableInterval MutableInterval, Options options) {
-    int distance = tokens.get(0).getTag(Scalar.class).getType().intValue();
+    double distance = ((Number)tokens.get(0).getTag(Scalar.class).getType()).doubleValue();
     Repeater<?> repeater = tokens.get(1).getTag(Repeater.class);
     Pointer.PointerType pointer = tokens.get(2).getTag(Pointer.class).getType();
     return repeater.getOffset(MutableInterval, distance, pointer);

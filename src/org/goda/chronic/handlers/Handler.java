@@ -66,13 +66,13 @@ public class Handler {
   }
 
   public boolean match(List<Token> tokens, Map<Handler.HandlerType, List<Handler>> definitions) {
-    // System.out.println("Handler.match: " + this);
+    //System.out.println("Handler.match: " + this);
     int tokenIndex = 0;
     for (HandlerPattern pattern : _patterns) {
       boolean optional = pattern.isOptional();
       if (pattern instanceof TagPattern) {
         boolean match = (tokenIndex < tokens.size() && tokens.get(tokenIndex).getTags(((TagPattern) pattern).getTagClass()).size() > 0);
-        // System.out.println("Handler.match:   " + pattern + "=" + match);
+        //System.out.println("Handler.match:   " + ((TagPattern) pattern).getTagClass() + "=" + match);
         if (!match && !optional) {
           return false;
         }
@@ -214,12 +214,12 @@ public class Handler {
         if (options.isDebug()) {
           System.out.println("Chronic.tokensToMutableInterval: narrow");
         }
-        //List<Token> goodTokens = new LinkedList<Token>();
-        //for (Token token : tokens) {
-        //if (token.getTag(Separator.class) == null) {
-        //  goodTokens.add(token);
-        //}
-        //}
+        List<Token> goodTokens = new LinkedList<Token>();
+        for (Token token : tokens) {
+        if (token.getTag(Separator.class) == null) {
+          goodTokens.add(token);
+        }
+        }
         return handler.getHandler().handle(tokens, options);
       }
     }

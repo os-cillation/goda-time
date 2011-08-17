@@ -17,7 +17,10 @@ public abstract class RepeaterUnit extends Repeater<Object> {
     private static final String HOUR_PATTERN = "^hours?$";
     private static final String MINUTE_PATTERN = "^minutes?$";
     private static final String SECOND_PATTERN = "^seconds?$";
-
+    private static final String HOUR_ABBRV_PATTERN = "^hr.?$";
+    private static final String MINUTE_ABBRV_PATTERN = "^min.?$";
+    
+    
     public RepeaterUnit() {
         super(null);
     }
@@ -35,10 +38,14 @@ public abstract class RepeaterUnit extends Repeater<Object> {
             scanner.put(RepeaterUnit.HOUR_PATTERN, RepeaterUnit.UnitName.HOUR);
             scanner.put(RepeaterUnit.MINUTE_PATTERN, RepeaterUnit.UnitName.MINUTE);
             scanner.put(RepeaterUnit.SECOND_PATTERN, RepeaterUnit.UnitName.SECOND);
-
+            scanner.put(RepeaterUnit.HOUR_ABBRV_PATTERN, RepeaterUnit.UnitName.HOUR);
+            scanner.put(RepeaterUnit.MINUTE_ABBRV_PATTERN, RepeaterUnit.UnitName.MINUTE);
+            
+            
             for (String scannerItem : scanner.keySet()) {
                 if (token.getWord()
                              .matches(scannerItem)) {
+                    
                     RepeaterUnit.UnitName unitNameEnum = scanner.get(scannerItem);
                     return unitNameEnum.create();
                 }

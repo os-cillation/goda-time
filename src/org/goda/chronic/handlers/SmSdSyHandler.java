@@ -17,8 +17,8 @@ import org.goda.time.MutableInterval;
 public class SmSdSyHandler implements IHandler {
 
   public MutableInterval handle(List<Token> tokens, Options options) {
-    int month = tokens.get(0).getTag(ScalarMonth.class).getType().intValue();
-    int day = tokens.get(1).getTag(ScalarDay.class).getType().intValue();
+    int month = ((Number)tokens.get(0).getTag(ScalarMonth.class).getType()).intValue();
+    int day = ((Number) tokens.get(1).getTag(ScalarDay.class).getType()).intValue();
     int year = tokens.get(2).getTag(ScalarYear.class).getType().intValue();
 
     MutableInterval MutableInterval;

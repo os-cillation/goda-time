@@ -17,7 +17,7 @@ public class ScalarYear extends Scalar {
 
     public static final String YEAR_PATTERN = "^([1-9]\\d)?\\d\\d?$";
 
-    public ScalarYear(Integer type) {
+    public ScalarYear(Double type) {
         super(type);
     }
 
@@ -32,7 +32,7 @@ public class ScalarYear extends Scalar {
                     scalarValue += 1900;
                 }
 
-                return new ScalarYear(Integer.valueOf(scalarValue));
+                return new ScalarYear(Double.valueOf(scalarValue));
             }
         }
 

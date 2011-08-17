@@ -54,10 +54,10 @@ public class RepeaterYear extends RepeaterUnit {
   }
 
   @Override
-  public MutableInterval getOffset(MutableInterval span, int amount, Pointer.PointerType pointer) {
+  public MutableInterval getOffset(MutableInterval span, double amount, Pointer.PointerType pointer) {
     int direction = (pointer == Pointer.PointerType.FUTURE) ? 1 : -1;
-    DateTime newBegin = Time.cloneAndAdd(span.getStart(), Time.YEAR, amount * direction);
-    DateTime newEnd = Time.cloneAndAdd(span.getEnd(), Time.YEAR, amount * direction);
+    DateTime newBegin = Time.cloneAndAdd(span.getStart(), Time.YEAR, (int)(amount * direction));
+    DateTime newEnd = Time.cloneAndAdd(span.getEnd(), Time.YEAR, (int)(amount * direction));
     return new MutableInterval(newBegin, newEnd);
   }
 

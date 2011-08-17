@@ -57,11 +57,11 @@ public class RepeaterWeekend extends RepeaterUnit {
   }
 
   @Override
-  public MutableInterval getOffset(MutableInterval span, int amount, PointerType pointer) {
+  public MutableInterval getOffset(MutableInterval span, double amount, PointerType pointer) {
     int direction = (pointer == Pointer.PointerType.FUTURE) ? 1 : -1;
     RepeaterWeekend weekend = new RepeaterWeekend();
     weekend.setStart(span.getStart());
-    DateTime start = Time.cloneAndAdd(weekend.nextMutableInterval(pointer).getStart(), Time.SECOND, (amount - 1) * direction * RepeaterWeek.WEEK_SECONDS);
+    DateTime start = Time.cloneAndAdd(weekend.nextMutableInterval(pointer).getStart(), Time.SECOND, (int) ((amount - 1) * direction * RepeaterWeek.WEEK_SECONDS));
     return new MutableInterval(start, Time.cloneAndAdd(start, Time.SECOND, Time.getWidth(span)));
   }
 

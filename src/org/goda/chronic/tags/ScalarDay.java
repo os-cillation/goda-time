@@ -15,7 +15,7 @@ public class ScalarDay extends Scalar {
 
     private static final String DAY_PATTERN = "^\\d\\d?$";
 
-    public ScalarDay(Integer type) {
+    public ScalarDay(Double type) {
         super(type);
     }
 
@@ -25,7 +25,7 @@ public class ScalarDay extends Scalar {
             int scalarValue = Integer.parseInt(token.getWord());
 
             if (!((scalarValue > 31) || ((postToken != null) && Scalar.TIMES.contains(postToken.getWord())))) {
-                return new ScalarDay(Integer.valueOf(scalarValue));
+                return new ScalarDay(Double.valueOf(scalarValue));
             }
         }
 

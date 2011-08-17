@@ -5,6 +5,7 @@
 
 package org.goda.chronic;
 
+import java.util.Date;
 import junit.framework.TestCase;
 import org.goda.time.MutableInterval;
 
@@ -24,7 +25,7 @@ public class ChronicTest extends TestCase {
     public void testParse_String() {
         System.out.println("parse");
         Options o = new Options();
-       // o.setDebug(true);
+        o.setDebug(true);
         MutableInterval expResult = null;
         MutableInterval result = Chronic.parse("this tuesday 5:00", o);
         System.out.println(result);
@@ -45,6 +46,34 @@ public class ChronicTest extends TestCase {
 
         result = Chronic.parse("three hundred twenty-one and a half days ago", o);
         System.out.println(result);
+
+        o = new Options();
+        o.setDebug(true);
+        
+         System.out.println("1.25 hr ago");
+        result = Chronic.parse("1.25 hr ago", o);
+        System.out.println(new Date(result.getStartMillis()));
+        
+        
+        System.out.println("17:50");
+        result = Chronic.parse("17:50", o);
+        System.out.println(new Date(result.getStartMillis()));
+        
+        System.out.println("3 am");
+        result = Chronic.parse("3 am", o);
+        System.out.println(result.getStart());
+        
+       
+        
+        System.out.println("3a");
+        result = Chronic.parse("3a", o);
+        System.out.println(new Date(result.getStartMillis()));
+        
+        System.out.println("10021974");
+        result = Chronic.parse("10021974", o);
+        System.out.println(result.getStart());
+        
+        
     }
 
     /**

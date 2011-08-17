@@ -26,9 +26,9 @@ public class RepeaterMonth extends RepeaterUnit {
   }
 
   @Override
-  public MutableInterval getOffset(MutableInterval mutableInterval, int amount, Pointer.PointerType pointer) {
+  public MutableInterval getOffset(MutableInterval mutableInterval, double amount, Pointer.PointerType pointer) {
     int direction = (pointer == Pointer.PointerType.FUTURE) ? 1 : -1;
-    return new MutableInterval(Time.cloneAndAdd(mutableInterval.getStart(), Time.MONTH, amount * direction), Time.cloneAndAdd(mutableInterval.getEnd(), Time.MONTH, amount * direction));
+    return new MutableInterval(Time.cloneAndAdd(mutableInterval.getStart(), Time.MONTH, (int)(amount * direction)), Time.cloneAndAdd(mutableInterval.getEnd(), Time.MONTH, (int)(amount * direction)));
   }
 
   @Override

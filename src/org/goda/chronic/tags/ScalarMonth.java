@@ -18,7 +18,7 @@ public class ScalarMonth extends Scalar {
 
     private static final String MONTH_PATTERN = "^\\d\\d?$";
 
-    public ScalarMonth(Integer type) {
+    public ScalarMonth(Double type) {
         super(type);
     }
 
@@ -28,7 +28,7 @@ public class ScalarMonth extends Scalar {
             int scalarValue = Integer.parseInt(token.getWord());
 
             if (!((scalarValue > 12) || ((postToken != null) && Scalar.TIMES.contains(postToken.getWord())))) {
-                return new ScalarMonth(Integer.valueOf(scalarValue));
+                return new ScalarMonth(Double.valueOf(scalarValue));
             }
         }
 

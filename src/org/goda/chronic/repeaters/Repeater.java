@@ -84,7 +84,7 @@ public abstract class Repeater<T> extends Tag<T> implements Comparable<Repeater<
 
   protected abstract MutableInterval _thisMutableInterval(Pointer.PointerType pointer);
 
-  public abstract MutableInterval getOffset(MutableInterval MutableInterval, int amount, Pointer.PointerType pointer);
+  public abstract MutableInterval getOffset(MutableInterval MutableInterval, double amount, Pointer.PointerType pointer);
 
   @Override
   public String toString() {

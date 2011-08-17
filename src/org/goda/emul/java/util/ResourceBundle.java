@@ -142,7 +142,7 @@ public abstract class ResourceBundle {
 			last = theParent;
 			theParent = theParent.parent;
 		} while (theParent != null);
-		throw new MissingResourceException(null, GWT.getTypeName(last), key);
+		throw new MissingResourceException(null, last.getClass().toString(), key);
 	}
 
 	/**

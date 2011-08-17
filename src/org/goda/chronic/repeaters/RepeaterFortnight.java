@@ -72,9 +72,9 @@ public class RepeaterFortnight extends RepeaterUnit {
   }
 
   @Override
-  public MutableInterval getOffset(MutableInterval mutableInterval, int amount, PointerType pointer) {
+  public MutableInterval getOffset(MutableInterval mutableInterval, double amount, PointerType pointer) {
     int direction = (pointer == PointerType.FUTURE) ? 1 : -1;
-    int seconds = direction * amount * RepeaterFortnight.FORTNIGHT_SECONDS;
+    int seconds = (int) (direction * amount * RepeaterFortnight.FORTNIGHT_SECONDS);
     return new MutableInterval( mutableInterval.getStart().plusSeconds(seconds), mutableInterval.getEnd().plusSeconds(seconds));
     
   }

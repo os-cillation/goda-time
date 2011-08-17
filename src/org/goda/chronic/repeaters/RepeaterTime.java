@@ -23,8 +23,8 @@ public class RepeaterTime extends Repeater<Tick> {
     Tick type;
     int length = t.length();
     if (length <= 2) {
-      int hours = Integer.parseInt(t);
-      int hoursInSeconds = hours * 60 * 60;
+      double hours = Double.parseDouble(t);
+      int hoursInSeconds = (int) Math.round(hours * 60D * 60D);
       if (hours == 12) {
         type = new Tick(0 * 60 * 60, true);
       }
@@ -33,15 +33,15 @@ public class RepeaterTime extends Repeater<Tick> {
       }
     }
     else if (length == 3) {
-      int hoursInSeconds = Integer.parseInt(t.substring(0, 1)) * 60 * 60;
-      int minutesInSeconds = Integer.parseInt(t.substring(1)) * 60;
+      int hoursInSeconds = (int) (Double.parseDouble(t.substring(0, 1)) * 60 * 60);
+      int minutesInSeconds = (int) (Double.parseDouble(t.substring(1)) * 60D);
       type = new Tick(hoursInSeconds + minutesInSeconds, true);
     }
     else if (length == 4) {
       boolean ambiguous = (time.contains(":") && Integer.parseInt(t.substring(0, 1)) != 0 && Integer.parseInt(t.substring(0, 2)) <= 12);
-      int hours = Integer.parseInt(t.substring(0, 2));
-      int hoursInSeconds = hours * 60 * 60;
-      int minutesInSeconds = Integer.parseInt(t.substring(2)) * 60;
+      double hours = Double.parseDouble(t.substring(0, 2));
+      int hoursInSeconds = (int)(hours * 60 * 60);
+      int minutesInSeconds = (int)(Double.parseDouble(t.substring(2)) * 60);
       if (hours == 12) {
         type = new Tick(0 * 60 * 60 + minutesInSeconds, ambiguous);
       }
@@ -50,9 +50,9 @@ public class RepeaterTime extends Repeater<Tick> {
       }
     }
     else if (length == 5) {
-      int hoursInSeconds = Integer.parseInt(t.substring(0, 1)) * 60 * 60;
-      int minutesInSeconds = Integer.parseInt(t.substring(1, 3)) * 60;
-      int seconds = Integer.parseInt(t.substring(3));
+      int hoursInSeconds = (int)(Double.parseDouble(t.substring(0, 1)) * 60 * 60);
+      int minutesInSeconds =(int)(Double.parseDouble(t.substring(1, 3)) * 60);
+      int seconds = (int) Double.parseDouble(t.substring(3));
       type = new Tick(hoursInSeconds + minutesInSeconds + seconds, true);
     }
     else if (length == 6) {
@@ -169,7 +169,7 @@ public class RepeaterTime extends Repeater<Tick> {
   }
 
   @Override
-  public MutableInterval getOffset(MutableInterval MutableInterval, int amount, PointerType pointer) {
+  public MutableInterval getOffset(MutableInterval MutableInterval, double amount, PointerType pointer) {
     throw new IllegalStateException("Not implemented.");
   }
 

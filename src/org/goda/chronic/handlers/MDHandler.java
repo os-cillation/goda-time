@@ -14,7 +14,7 @@ import java.util.List;
 
 
 public abstract class MDHandler implements IHandler {
-    public MutableInterval handle(Repeater<?> month, Tag<Integer> day, List<Token> timeTokens, Options options) {
+    public MutableInterval handle(Repeater<?> month, Tag<? extends Number> day, List<Token> timeTokens, Options options) {
         month.setStart(new DateTime(options.getNow().getMillis()));
 
         MutableInterval mutableInterval = month.thisMutableInterval(options.getContext());

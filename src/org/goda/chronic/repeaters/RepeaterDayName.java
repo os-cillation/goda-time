@@ -63,7 +63,7 @@ public class RepeaterDayName extends Repeater<RepeaterDayName.DayName> {
   }
 
   @Override
-  public MutableInterval getOffset(MutableInterval MutableInterval, int amount, PointerType pointer) {
+  public MutableInterval getOffset(MutableInterval MutableInterval, double amount, PointerType pointer) {
     throw new IllegalStateException("Not implemented.");
   }
 

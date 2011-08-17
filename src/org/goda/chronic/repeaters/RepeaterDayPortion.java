@@ -101,11 +101,11 @@ public abstract class RepeaterDayPortion<T> extends Repeater<T> {
   }
 
   @Override
-  public MutableInterval getOffset(MutableInterval mutableInterval, int amount, PointerType pointer) {
+  public MutableInterval getOffset(MutableInterval mutableInterval, double amount, PointerType pointer) {
     setStart(mutableInterval.getStart());
     MutableInterval portionMutableInterval = nextMutableInterval(pointer);
     int direction = (pointer == Pointer.PointerType.FUTURE) ? 1 : -1;
-    int seconds = direction * (amount - 1) * RepeaterDay.DAY_SECONDS;
+    int seconds = (int) (direction * (amount - 1) * RepeaterDay.DAY_SECONDS);
     portionMutableInterval = new MutableInterval( portionMutableInterval.getStart().plusSeconds(seconds), portionMutableInterval.getEnd().plusSeconds(seconds));
     return portionMutableInterval;
   }

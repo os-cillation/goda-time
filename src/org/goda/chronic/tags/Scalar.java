@@ -1,7 +1,6 @@
 package org.goda.chronic.tags;
 
 import org.goda.chronic.Options;
-import org.goda.chronic.utils.StringUtils;
 import org.goda.chronic.utils.Token;
 
 import java.util.HashSet;
@@ -9,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 
-public class Scalar extends Tag<Integer> {
+public class Scalar extends Tag<Double> {
 
     public static final Scanner SCANNER = new Scanner() {
 
@@ -19,7 +18,7 @@ public class Scalar extends Tag<Integer> {
 
     };
 
-    private static final String SCALAR_PATTERN = "^\\d*$";
+    private static final String SCALAR_PATTERN = "^[\\d|\\.]*$";
     public static Set<String> TIMES = new HashSet<String>();
 
     static {
@@ -31,7 +30,7 @@ public class Scalar extends Tag<Integer> {
         Scalar.TIMES.add("night");
     }
 
-    public Scalar(Integer type) {
+    public Scalar(Double type) {
         super(type);
     }
 
@@ -74,16 +73,24 @@ public class Scalar extends Tag<Integer> {
     }
 
     public static Scalar scan(Token token, Token postToken, Options options) {
+        if(options.isDebug()){
+            System.out.println("Scalar.scan "+token+" "+postToken);
+        }
         if (token.getWord()
                                      .matches(Scalar.SCALAR_PATTERN)) {
             if (
                 (token.getWord() != null) && (token.getWord()
                                                        .length() > 0) &&
                     !((postToken != null) && Scalar.TIMES.contains(postToken.getWord()))) {
-                return new Scalar(Integer.valueOf(token.getWord()));
+                return new Scalar(Double.valueOf(token.getWord()));
             }
         } else {
-            Integer intStrValue = StringUtils.integerValue(token.getWord());
+            Double intStrValue = null;
+            try{
+                Double.valueOf(token.getWord());
+            } catch(NumberFormatException e){
+                ;// noop.
+            }
 
             if (intStrValue != null) {
                 return new Scalar(intStrValue);

@@ -17,6 +17,7 @@ package org.goda.time.format;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -1726,8 +1727,12 @@ public class DateTimeFormatterBuilder {
                     array = new Object[] {validValues, new Integer(maxLength)};
                     innerMap.put(iFieldType, array);
                 } else {
-                    validValues = (Set<String>) array[0];
-                    maxLength = (Integer) array[1];
+                    try{
+                        validValues = array[0] instanceof Set ? (Set) array[0] : Collections.EMPTY_SET;
+                        maxLength = (Integer) array[1];
+                    } catch(ClassCastException e){
+                        e.printStackTrace();
+                    }
                 }
             }
             // match the longest string first using our knowledge of the max length

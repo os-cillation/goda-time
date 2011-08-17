@@ -48,10 +48,10 @@ public class RepeaterDay extends RepeaterUnit {
   }
 
   @Override
-  public MutableInterval getOffset(MutableInterval mutableInterval, int amount, Pointer.PointerType pointer) {
+  public MutableInterval getOffset(MutableInterval mutableInterval, double amount, Pointer.PointerType pointer) {
     int direction = (pointer == Pointer.PointerType.FUTURE) ? 1 : -1;
     // WARN: Does not use Calendar
-    int seconds = direction * amount * RepeaterDay.DAY_SECONDS;
+    int seconds = (int) (direction * amount * RepeaterDay.DAY_SECONDS);
     return new MutableInterval( mutableInterval.getStart().plusSeconds(seconds), mutableInterval.getEnd().plusSeconds(seconds));
   }
 

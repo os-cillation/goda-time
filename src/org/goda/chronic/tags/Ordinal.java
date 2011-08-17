@@ -6,7 +6,7 @@ import org.goda.chronic.utils.Token;
 import java.util.List;
 
 
-public class Ordinal extends Tag<Integer> {
+public class Ordinal extends Tag<Number> {
 
     public static final Scanner SCANNER = new Scanner() {
 

@@ -33,10 +33,10 @@ public class RepeaterSecond extends RepeaterUnit {
   }
 
   @Override
-  public MutableInterval getOffset(MutableInterval span, int amount, Pointer.PointerType pointer) {
+  public MutableInterval getOffset(MutableInterval span, double amount, Pointer.PointerType pointer) {
     int direction = (pointer == Pointer.PointerType.FUTURE) ? 1 : -1;
     // WARN: Does not use Calendar
-    int seconds = direction * amount * RepeaterSecond.SECOND_SECONDS;
+    int seconds = (int) (direction * amount * RepeaterSecond.SECOND_SECONDS);
     return new MutableInterval( span.getStart().plusSeconds(seconds), span.getEnd().plusSeconds(seconds));
   }
 

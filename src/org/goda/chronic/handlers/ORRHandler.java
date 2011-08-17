@@ -14,7 +14,7 @@ public abstract class ORRHandler implements IHandler {
   public MutableInterval handle(List<Token> tokens, MutableInterval outerMutableInterval, Options options) {
     Repeater<?> repeater = tokens.get(1).getTag(Repeater.class);
     repeater.setStart(Time.cloneAndAdd(outerMutableInterval.getStart(), Time.SECOND, -1));
-    Integer ordinalValue = tokens.get(0).getTag(Ordinal.class).getType();
+    Number ordinalValue = tokens.get(0).getTag(Ordinal.class).getType();
     MutableInterval MutableInterval = null;
     for (int i = 0; i < ordinalValue.intValue(); i++) {
       MutableInterval = repeater.nextMutableInterval(Pointer.PointerType.FUTURE);

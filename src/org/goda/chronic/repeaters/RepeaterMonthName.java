@@ -107,7 +107,7 @@ public class RepeaterMonthName extends Repeater<RepeaterMonthName.MonthName> {
   }
 
   @Override
-  public MutableInterval getOffset(MutableInterval MutableInterval, int amount, PointerType pointer) {
+  public MutableInterval getOffset(MutableInterval MutableInterval, double amount, PointerType pointer) {
     throw new IllegalStateException("Not implemented.");
   }
 
