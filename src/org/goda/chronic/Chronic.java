@@ -205,7 +205,7 @@ public class Chronic {
         String normalizedText = text.toLowerCase();
         normalizedText = normalizedText.replaceAll("\\b(\\d\\d)(\\d\\d)(\\d\\d\\d\\d)\\b", "$1/$2/$3");
         normalizedText = normalizedText.replaceAll("(\\d|\\b)a\\b", "$1 am ");
-        normalizedText = normalizedText.replaceAll("(\\d|\\b)a\\b", "$1 pm ");
+        normalizedText = normalizedText.replaceAll("(\\d|\\b)p\\b", "$1 pm ");
         normalizedText = Chronic.numericizeNumbers(normalizedText);
         normalizedText = normalizedText.replaceAll("['\"]", "");
         normalizedText = normalizedText.replaceAll("([/\\-,@])", " $1 ");
