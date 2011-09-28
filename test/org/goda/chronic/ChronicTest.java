@@ -74,6 +74,59 @@ public class ChronicTest extends TestCase {
         System.out.println(result.getStart());
         
         
+        System.out.println("023");
+        result = Chronic.parse("023", o);
+        System.out.println(result.getStart());
+        
+        System.out.println("1630");
+        result = Chronic.parse("1630", o);
+        System.out.println(result.getStart());
+        
+        System.out.println("16:50 10/2/1974");
+        result = Chronic.parse("16:50 10/2/1974 ", o);
+        System.out.println(result.getStart());
+        
+        
+        System.out.println("16:50 10021974");
+        result = Chronic.parse("16:50 10021974 ", o);
+        System.out.println(result.getStart());
+        
+        
+        
+        System.out.println("10:00am");
+        result = Chronic.parse("10:00am");
+        System.out.println(result.getStart());
+        
+        
+        System.out.println("10:00a 9/23/2011");
+        result = Chronic.parse("10:00a 9/23/2011");
+        System.out.println(result.getStart());
+    
+        System.out.println("sept 11 2001");
+        result = Chronic.parse("sept 11 2001");
+        System.out.println(result.getStart());
+        
+        
+        
+        
+        System.out.println("10:00am sept 11 2001");
+        result = Chronic.parse("10:00am sept 11 2001");
+        System.out.println(result.getStart());
+    
+    }
+    
+    
+    
+    
+    
+    public void testRegExTemp(){
+        
+        String s = "1650 10/2/1974";
+        s = s.replaceAll("(^| )([01]\\d)(\\d\\d)(pm|am|p|a|\\W)","$1$2:$3$4");
+        System.out.println(s);
+        
+        s = "4:50pm 10/2/74";
+        System.out.println(s.replaceAll( "(\\d?\\d:\\d\\d[p|a]m)\\W(\\d?\\d/\\d?\\d/\\d\\d\\d?\\d?)", "$2 $1"));
     }
 
     /**

@@ -6,6 +6,7 @@ import org.goda.chronic.repeaters.Repeater;
 import org.goda.chronic.tags.Grabber;
 import org.goda.chronic.tags.Ordinal;
 import org.goda.chronic.tags.Pointer;
+import org.goda.chronic.tags.Pointer.PointerType;
 import org.goda.chronic.tags.Scalar;
 import org.goda.chronic.tags.Separator;
 import org.goda.chronic.tags.Tag.Scanner;
@@ -18,10 +19,9 @@ import org.goda.time.MutableInterval;
 
 import java.util.LinkedList;
 import java.util.List;
-import org.goda.chronic.tags.Pointer.PointerType;
-
 
 public class Chronic {
+
     public static final String VERSION = "0.2.3";
 
     private Chronic() {
@@ -85,6 +85,10 @@ public class Chronic {
 
         if (normalizedText.matches("\\d?\\d:\\d\\d")) {
             return doMilitaryTime(normalizedText, options);
+        }
+
+        if (normalizedText.matches("[01]?\\d\\d\\d")) {
+            return doMilitaryTime(normalizedText.replaceAll("([01]?\\d)(\\d\\d)", "$1:$2"), options);
         }
 
         // get base tokens for each word
@@ -159,7 +163,6 @@ public class Chronic {
     /**
      * Guess a specific time within the given MutableInterval
      */
-
     // DIFF: We return MutableInterval instead of Date
     protected static MutableInterval guess(MutableInterval mutableInterval) {
         if (mutableInterval == null) {
@@ -169,11 +172,9 @@ public class Chronic {
         long guessValue;
 
         if (Time.getWidth(mutableInterval) > 1) {
-            guessValue = mutableInterval.getStart()
-                                        .getMillis() + (Time.getWidth(mutableInterval) / 2);
+            guessValue = mutableInterval.getStart().getMillis() + (Time.getWidth(mutableInterval) / 2);
         } else {
-            guessValue = mutableInterval.getStart()
-                                        .getMillis();
+            guessValue = mutableInterval.getStart().getMillis();
         }
 
         MutableInterval guess = new MutableInterval(guessValue, guessValue);
@@ -203,9 +204,15 @@ public class Chronic {
      */
     protected static String preNormalize(String text) {
         String normalizedText = text.toLowerCase();
+        normalizedText = replaceMilitaryTime(normalizedText);
+        normalizedText = normalizedText.replaceAll("(\\d)(a)[m]?(\\b)", "$1 $2m$3");
+        normalizedText = normalizedText.replaceAll("(\\d)(p)[m]?(\\b)", "$1 $2m$3");
+        normalizedText = normalizedText.replaceAll("(^| )([01]\\d)(\\d\\d) (pm|am|p|a|\\W)", "$1$2:$3$4");
         normalizedText = normalizedText.replaceAll("\\b(\\d\\d)(\\d\\d)(\\d\\d\\d\\d)\\b", "$1/$2/$3");
-        normalizedText = normalizedText.replaceAll("(\\d|\\b)a\\b", "$1 am ");
-        normalizedText = normalizedText.replaceAll("(\\d|\\b)p\\b", "$1 pm ");
+        normalizedText = normalizedText.replaceAll("(\\d?\\d:\\d\\d [p|a]m)\\W(\\d?\\d/\\d?\\d/\\d\\d\\d?\\d?)", "$2 $1");
+        System.out.println("PRE COMMA "+normalizedText);
+        normalizedText = Chronic.commaCheck(normalizedText);
+        System.out.println("POST COMMA "+normalizedText);
         normalizedText = Chronic.numericizeNumbers(normalizedText);
         normalizedText = normalizedText.replaceAll("['\"]", "");
         normalizedText = normalizedText.replaceAll("([/\\-,@])", " $1 ");
@@ -230,18 +237,60 @@ public class Chronic {
     }
 
     private static MutableInterval doMilitaryTime(String text, Options options) {
-        
-
         MutableDateTime time = new MutableDateTime();
         String[] values = text.split(":");
         time.setHourOfDay(Integer.parseInt(values[0]));
         time.setMinuteOfHour(Integer.parseInt(values[1]));
-        if(time.isAfterNow() && options.getContext() == PointerType.PAST){
+
+        if (time.isAfterNow() && (options.getContext() == PointerType.PAST)) {
             time.addDays(-1);
         }
+
         MutableInterval result = new MutableInterval(time, time);
         result.setStart(time);
         result.setEnd(time);
+
         return result;
+    }
+
+    private static String commaCheck(String input) {
+        String[] monthish = new String[]{"jan", "january", "feb", "february", "mar", "march", "apr", "april", "may", "jun", "june", "jul", "july", "aug", "august", "sep", "sept", "september", "oct", "october", "nov", "november", "dec", "december"};
+        for (String s : monthish) {
+            if (input.matches(".*(" + s + ") (\\d?\\d) (\\d\\d\\d\\d).*")) {
+                input = input.replaceAll("(.*)(" + s + ") (\\d?\\d) (\\d\\d\\d\\d)", "$3 $2 $4 $1");
+                if (input.matches(".*\\d\\d \\d?\\d:\\d\\d am.*")) {
+                    input = input.replaceAll("\\d\\d:\\d\\d am", "at $0");
+                }
+                break;
+            }
+
+        }
+
+        return input;
+
+    }
+
+    private static String replaceMilitaryTime(String input) {
+        if ((input.indexOf("am") != -1) || (input.indexOf("pm") != -1) || input.matches(".*\\d[a|p]\\b.*")) {
+            return input;
+        }
+
+        String replaced = input.replaceAll("([0|1]\\d):(\\d\\d)", "###$1:$2###");
+
+        if (replaced.indexOf("###") != -1) {
+            int start = replaced.indexOf("###") + 3;
+            String time = replaced.substring(start, replaced.indexOf("###", start));
+            String[] split = time.split(":");
+            int hours = Integer.parseInt(split[0]);
+
+            if (hours >= 12) {
+                return replaced.replaceAll("###.*###", (((hours - 12) == 0) ? 12 : (hours - 12)) + ":" + split[1]
+                        + " pm");
+            } else {
+                return replaced.replaceAll("###.*###", hours + ":" + split[1] + " am");
+            }
+        }
+
+        return replaced;
     }
 }
