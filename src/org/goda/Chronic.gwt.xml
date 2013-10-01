@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module>
-        <inherits name="org.goda.Goda" />
-	<source path="chronic" />
-</module>
