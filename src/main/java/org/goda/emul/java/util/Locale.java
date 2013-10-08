@@ -453,19 +453,18 @@ public final class Locale implements Cloneable, Serializable {
         }
 
         StringBuffer result = new StringBuffer();
-        StringTokenizer tokens = new StringTokenizer(variantCode, "_"); //$NON-NLS-1$
-        while (tokens.hasMoreTokens()) {
-            String code, variant = tokens.nextToken();
+        String[] tokens = variantCode.split("_");
+        for (int i=0; i<tokens.length; ++i) {
+            String code, variant = tokens[i];
             try {
                 code = bundle.getString(variant);
             } catch (MissingResourceException e) {
                 code = variant;
             }
             result.append(code);
-            if (tokens.hasMoreTokens()) {
-                result.append(',');
-            }
+            result.append(',');
         }
+        result.deleteCharAt(result.lastIndexOf(","));
         return result.toString();
     }
 
