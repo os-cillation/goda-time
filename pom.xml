@@ -2,13 +2,54 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.os-cillation.gwt</groupId>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+
+    <groupId>de.oscillation.gwt</groupId>
     <artifactId>goda-time</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0</version>
+    <version>0.0.1-SNAPSHOT</version>
 
     <name>goda-time</name>
+    <description>Goda-time - fork for use with GWT and maven</description>
     <url>https://github.com/os-cillation/goda-time</url>
+
+    <organization>
+        <name>os-cillation GmbH</name>
+        <url>http://www.os-cillation.de</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <id>sn</id>
+            <name>Sebastian Neuser</name>
+            <email>sn@os-cillation.de</email>
+            <roles>
+                <role>owner</role>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>GNU Lesser General Public License, version 2.1</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.tx://www.gnu.org/licenses/lgpl-2.1.html</url>
+        </license>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>git@github.com:os-cillation/goda-time.git</url>
+        <connection>scm:git:https://github.com/os-cillation/goda-time.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/os-cillation/goda-time.git</developerConnection>
+    </scm>
 
     <properties>
         <gwtVersion>2.4.0</gwtVersion>
@@ -88,6 +129,21 @@
                         <id>attach-javadocs</id>
                         <goals>
                             <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
                         </goals>
                     </execution>
                 </executions>
