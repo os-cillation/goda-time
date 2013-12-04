@@ -10,7 +10,7 @@
     <groupId>de.oscillation.gwt</groupId>
     <artifactId>goda-time</artifactId>
     <packaging>jar</packaging>
-    <version>0.0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
 
     <name>goda-time</name>
     <description>Goda-time - fork for use with GWT and maven</description>
